@@ -30,7 +30,11 @@ export const getStaticPaths = async () => {
   client.close();
 
   return {
-    fallback: false, // false = all paths are defined below, true = nextjs will try to generate a page if id is not in the paths below
+    // false = all paths are defined below, 
+    // true/blocking = nextjs will try to generate a page if id is not in the paths below
+    // true will generate empty page if url not found and fill it after (we have to handle it)
+    // blocking user will not see anything till page is prerendered
+    fallback: 'blocking', 
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
     })),
